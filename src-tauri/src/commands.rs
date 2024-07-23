@@ -1,6 +1,6 @@
-use std::net::{Ipv4Addr, UdpSocket};
-use std::thread;
+use std::net::Ipv4Addr;
 use std::time::Duration;
+use std::{net::UdpSocket, thread};
 
 use sysinfo::{Pid, System};
 
@@ -8,7 +8,6 @@ use crate::structs::Device;
 
 #[tauri::command]
 pub fn discover_devices() -> Vec<Device> {
-
     thread::spawn(|| {
         let socket = UdpSocket::bind("0.0.0.0:34254").expect("Could not bind to address");
         socket.set_broadcast(true).expect("Could not set broadcast");
@@ -36,7 +35,6 @@ pub fn discover_devices() -> Vec<Device> {
     });
 
     thread::sleep(Duration::from_secs(1));
-
 
     let socket = UdpSocket::bind("0.0.0.0:34255").expect("Could not bind to address");
     socket.set_broadcast(true).expect("Could not set broadcast");
@@ -87,4 +85,9 @@ fn parse_name_and_os(response: &str) -> (String, String) {
     }
 
     (name, os)
+}
+
+#[tauri::command]
+pub fn send_file(device: Device, file_path: String) -> Result<(), String> {
+    Ok(())
 }
