@@ -4,4 +4,5 @@ use serde::{Deserialize, Serialize};
 pub struct Device {
     pub ip: String,
     pub hostname: String,
+	pub os: String,
 }

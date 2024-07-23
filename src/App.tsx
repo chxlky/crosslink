@@ -15,6 +15,7 @@ function App() {
 
 		try {
 			const discoveredDevices = await invoke<Device[]>("discover_devices");
+			console.log(discoveredDevices);
 			setDevices(discoveredDevices);
 		} catch (err) {
 			setError(err instanceof Error ? err.message : "Unknown error");
@@ -45,7 +46,7 @@ function App() {
 			<ul class="mt-4">
 				{devices().map((device) => (
 					<li class="border-b border-gray-200 py-2">
-						<strong>IP:</strong> {device.ip}, <strong>Hostname:</strong> {device.hostname}
+						<strong>IP:</strong> {device.ip}, <strong>Hostname:</strong> {device.hostname}, <strong>OS:</strong> {device.os}
 					</li>
 				))}
 			</ul>
