@@ -1,26 +1,16 @@
-# CrossLink
+# crosslink_flutter
 
-A cross-platform file-sharing application with a Rust backend and a SolidJS frontend, using Tauri. This application is designed to run on Windows, Linux and Android (so far), allowing devices on the same network to discover each other and share files seamlessly.
+A new Flutter project.
 
-## Features
+## Getting Started
 
-- Discover devices on the same network
-- Cross-platform support (Windows, Linux, Android)
+This project is a starting point for a Flutter application.
 
-## Technologies Used
+A few resources to get you started if this is your first Flutter project:
 
-- **Backend**: Rust
-- **Frontend**: SolidJS
-- **Framework**: Tauri
-- **Styling**: TailwindCSS
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-## Prerequisites
-
-- **Rust**: Make sure you have Rust installed. You can download it [here](https://www.rust-lang.org/tools/install).
-- **Bun**: Install Bun from [here](https://bun.sh/).
-
-## Installation
-- Clone the repository
-- Run `bun i` to install the dependencies
-- Run `bun run tauri dev` for Desktop or `bun run tauri android dev` for Android
-
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
