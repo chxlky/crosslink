@@ -3,6 +3,9 @@ import { invoke } from "@tauri-apps/api/core";
 import { Device } from "./types";
 import "./index.css";
 import { open } from "@tauri-apps/plugin-dialog";
+import { listen } from "@tauri-apps/api/event";
+import "./utils";
+import { checkNotificationsPermission, enqueueNotification } from "./utils";
 
 function App() {
 	const [devices, setDevices] = createSignal<Device[]>([]);
@@ -24,6 +27,15 @@ function App() {
 			setError(err instanceof Error ? err.message : "Unknown error");
 		} finally {
 			setLoading(false);
+		}
+	};
+
+	const startServer = async () => {
+		try {
+			await invoke("start_file_server");
+		} catch (err) {
+			console.error(err);
+			setError(err instanceof Error ? err.message : "Unknown error");
 		}
 	};
 
@@ -52,7 +64,7 @@ function App() {
 			for (const filePath of paths) {
 				await invoke("send_file", { device, filePath });
 			}
-			alert("Files sent successfully!");
+			enqueueNotification("File Sent", `Sent file(s) to ${device.hostname}`);
 			setSelectedDevice(null);
 			setFilePaths([]);
 		} catch (err) {
@@ -68,11 +80,19 @@ function App() {
 	};
 
 	onMount(() => {
+		checkNotificationsPermission();
+		startServer();
+
 		const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 		setDarkMode(darkModeMediaQuery.matches);
 
 		darkModeMediaQuery.addEventListener("change", (e) => {
 			setDarkMode(e.matches);
+		});
+
+		listen("file-received", (event) => {
+			enqueueNotification("File Received", `Received file: ${event.payload}`);
+			console.log("File received", event.payload);
 		});
 	});
 

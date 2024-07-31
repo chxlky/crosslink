@@ -16,9 +16,11 @@ pub fn run() {
         })
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_notification::init())
         .invoke_handler(tauri::generate_handler![
             commands::discover_devices,
-            commands::send_file
+            commands::send_file,
+			commands::start_file_server,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
